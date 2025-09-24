@@ -71,6 +71,7 @@ body {
     text-transform: uppercase;
 }
 
+
 /* 主内容区域 */
 .main-content {
     flex: 1;
@@ -257,6 +258,16 @@ body {
     gap: 8px;
 }
 
+/* 国家操作按钮容器 */
+.country-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 40px;
+}
+
 /* 添加国家按钮 */
 .add-country-btn {
     width: 100%;
@@ -395,6 +406,124 @@ body {
 .set-default-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* 换位按钮样式 */
+.swap-main-btn {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #e2e8f0;
+    border-radius: 50%;
+    background: white;
+    color: #a0aec0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.swap-main-btn:hover {
+    border-color: #4299e1;
+    color: #4299e1;
+    background: #ebf8ff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+}
+
+.swap-main-btn:hover::after {
+    content: " Swap with Main";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2d3748;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    z-index: 1000;
+    animation: tooltipFadeIn 0.2s ease-out;
+}
+
+.swap-main-btn:active {
+    transform: scale(0.95);
+    background: #bee3f8;
+}
+
+.swap-main-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.swap-main-btn:disabled:hover {
+    border-color: #e2e8f0;
+    color: #a0aec0;
+    background: white;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 换位动画效果 */
+@keyframes swapAnimation {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(180deg);
+        background: #4299e1;
+        color: white;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+.swap-main-btn.swapping {
+    animation: swapAnimation 0.6s ease-in-out;
+    pointer-events: none;
+}
+
+/* 工具提示动画 */
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* 换位成功提示 */
+.swap-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #48bb78;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+    z-index: 1001;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* 确认对话框 */
@@ -1415,6 +1544,29 @@ body {
     
     .container {
         padding: 15px;
+    }
+    
+    /* 移动设备上的换位按钮优化 */
+    .country-actions {
+        gap: 6px;
+        min-height: 36px;
+    }
+    
+    .swap-main-btn,
+    .set-default-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+    }
+    
+    .swap-main-btn:hover::after {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+        top: -25px;
+    }
+    
+    .comparison-country-cell {
+        min-height: 70px;
     }
 }
 
